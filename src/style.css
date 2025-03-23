@@ -1,4 +1,6 @@
 /* Reset and base styles  */
+@import "tailwindcss";
+
 * {
   padding: 0px;
   margin: 0px;
