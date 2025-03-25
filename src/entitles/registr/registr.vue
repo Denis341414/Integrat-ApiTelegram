@@ -2,8 +2,13 @@
 import { Form } from "@primevue/forms";
 import { Button, InputText } from "primevue";
 import { useRegistrStore } from "./store/registrStore";
+import { registrWEandP } from "./model/registWithEmailAndPassword";
+import { getAuth } from "firebase/auth";
+import { useRouter } from "vue-router";
 
 const registrStore = useRegistrStore();
+const auth = getAuth();
+const router = useRouter();
 </script>
 <template>
   <div class="cont flex gap-10">
@@ -30,7 +35,20 @@ const registrStore = useRegistrStore();
       </div>
     </Form>
     <div class="buttons flex flex-col justify-center items-center gap-3">
-      <Button class="p-button w-auto" label="Зарегистрироваться" />
+      <Button
+        class="p-button w-auto"
+        label="Зарегистрироваться"
+        @click="
+          registrWEandP(
+            auth,
+            registrStore.email,
+            registrStore.password,
+            registrStore.retPassword,
+            registrStore,
+            router
+          )
+        "
+      />
       <router-link to="auth">
         <Button class="p-button w-auto" label="Войти" />
       </router-link>

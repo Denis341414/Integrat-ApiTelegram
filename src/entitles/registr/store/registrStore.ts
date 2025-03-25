@@ -7,7 +7,7 @@ export const useRegistrStore = defineStore("registrStore", () => {
   const retPassword = ref("");
   const user = ref({});
   const isLoggedIn = ref(false);
-  const refreshToken = ref("");
+  const userToken = ref("");
   const error = ref("");
 
   return {
@@ -16,7 +16,7 @@ export const useRegistrStore = defineStore("registrStore", () => {
     isLoggedIn,
     user,
     retPassword,
-    refreshToken,
+    userToken,
     error,
   };
 });
