@@ -14,7 +14,7 @@ export const routes = [
       { path: "", redirect: "/signIn/auth" },
     ],
   },
-  { path: "/home", component: Home },
+  { path: "/home", component: Home, meta: { requiresAuth: true } },
   { path: "/", redirect: "/signIn" },
   { path: "/settings", component: Settings },
 ];
