@@ -2,6 +2,8 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import type { Auth } from "firebase/auth/web-extension";
 import { useRegistrStore } from "../store/registrStore";
 import { useRouter } from "vue-router";
+import { validateEmailAndPassword } from "../../../shared/model/validate-error";
+import { LocalStorageEnum } from "../../../shared/consts";
 
 export const registrWEandP = (
   auth: Auth,
@@ -13,15 +15,17 @@ export const registrWEandP = (
 ) => {
   console.log(1);
   if (password === retPassword) {
-    if (localStorage.getItem("refreshToken")) {
-      localStorage.removeItem("refreshToken");
+    if (localStorage.getItem(LocalStorageEnum.REFRESH_TOKEN)) {
+      localStorage.removeItem(LocalStorageEnum.REFRESH_TOKEN);
     }
+
+    store.error = "";
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
         store.user = user;
         console.log(user);
-        localStorage.setItem("refreshToken", user.refreshToken);
+        localStorage.setItem(LocalStorageEnum.REFRESH_TOKEN, user.refreshToken);
         setTimeout(() => {
           router.push("/home");
         }, 2000);
@@ -29,7 +33,7 @@ export const registrWEandP = (
       })
       .catch((error) => {
         console.log(error.message);
-        store.error = error.code;
+        store.error = validateEmailAndPassword(error.code);
       });
   }
 };

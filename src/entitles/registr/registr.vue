@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Form } from "@primevue/forms";
-import { Button, InputText } from "primevue";
+import { Button, InputText, Message } from "primevue";
 import { useRegistrStore } from "./store/registrStore";
 import { registrWEandP } from "./model/registWithEmailAndPassword";
 import { getAuth } from "firebase/auth";
@@ -9,9 +9,24 @@ import { useRouter } from "vue-router";
 const registrStore = useRegistrStore();
 const auth = getAuth();
 const router = useRouter();
+
+auth.onAuthStateChanged((firebaseUser) => {
+  registrStore.user = firebaseUser;
+});
+
+const test = () =>
+  registrWEandP(
+    auth,
+    registrStore.email,
+    registrStore.password,
+    registrStore.retPassword,
+    registrStore,
+    router
+  );
 </script>
+
 <template>
-  <div class="cont flex gap-10">
+  <div class="cont flex gap-10 h-[30em] max-h-max min-h-max">
     <Form @submit="">
       <div class="p-field flex flex-col justify-center">
         <label for="email">Email</label>
@@ -34,22 +49,16 @@ const router = useRouter();
         />
       </div>
     </Form>
+    <Message v-if="registrStore.error" severity="error">{{
+      registrStore.error
+    }}</Message>
     <div class="buttons flex flex-col justify-center items-center gap-3">
       <Button
         class="p-button w-auto"
         label="Зарегистрироваться"
-        @click="
-          registrWEandP(
-            auth,
-            registrStore.email,
-            registrStore.password,
-            registrStore.retPassword,
-            registrStore,
-            router
-          )
-        "
+        @click="test"
       />
-      <router-link to="auth">
+      <router-link to="/auth">
         <Button class="p-button w-auto" label="Войти" />
       </router-link>
     </div>
