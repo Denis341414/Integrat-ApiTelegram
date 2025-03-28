@@ -20,8 +20,7 @@ export const signWEandP = (
     .then((userCredential) => {
       // Signed in
       const user = userCredential.user;
-      console.log(user);
-      console.log(user.refreshToken);
+      // console.log(user.refreshToken);
       store.user = user;
       localStorage.setItem(LocalStorageEnum.REFRESH_TOKEN, user.refreshToken);
       setTimeout(() => {

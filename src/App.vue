@@ -13,8 +13,8 @@ import { RouterView } from "vue-router";
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100vw;
+  width: 100%;
   height: 100vh;
-  background-color: rgb(61, 61, 61);
+  background-color: rgb(143, 143, 143);
 }
 </style>

@@ -24,7 +24,6 @@ export const registrWEandP = (
       .then((userCredential) => {
         const user = userCredential.user;
         store.user = user;
-        console.log(user);
         localStorage.setItem(LocalStorageEnum.REFRESH_TOKEN, user.refreshToken);
         setTimeout(() => {
           router.push("/home");
